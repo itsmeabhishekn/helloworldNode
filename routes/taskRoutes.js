@@ -50,6 +50,7 @@ router.put('/:taskId', authenticateUser, async (req, res) => {
     try {
         const { taskId } = req.params;
         const { title, description, completed } = req.body;
+        console.log('taskstatus', completed);
         let task = await Task.findById(taskId);
         if (!task) {
             return res.status(404).json({ message: 'Task not found' });
@@ -57,10 +58,10 @@ router.put('/:taskId', authenticateUser, async (req, res) => {
         if (task.user.toString() !== req.userId) {
             return res.status(403).json({ message: 'Unauthorized to update this task' });
         }
-        task.title = title || task.title;
-        task.description = description || task.description;
-        task.completed = completed || task.completed;
-
+        task.title = title !== undefined ? title : task.title;
+        task.description = description !== undefined ? description : task.description;
+        task.completed = completed !== undefined ? completed : task.completed;
+        console.log(task);
 
         await task.save();
 
