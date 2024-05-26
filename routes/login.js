@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
+router.use(express.json());
 router.post('/login', async (req, res) => {
   try {
+    // console.log(req);
     const { email, password } = req.body;
 
     // Check if the user exists
@@ -24,7 +26,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, 'nekot', { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, 'nekot', { expiresIn: '24h' });
 
     res.status(200).json({ message: 'Login successful', token });
   } catch (err) {

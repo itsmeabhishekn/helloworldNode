@@ -29,7 +29,7 @@ router.post('/signup', async (req, res) => {
     await newUser.save();
 
     // Generate JWT token
-    const token = jwt.sign({ id: newUser._id }, 'nekot', { expiresIn: '1h' });
+    const token = jwt.sign({ id: newUser._id }, 'nekot', { expiresIn: '24h' });
 
     res.status(201).json({ message: 'Signup successful', token });
   } catch (err) {
